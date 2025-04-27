@@ -4,6 +4,8 @@ This repository is a fork of a kata project originally featuring multiple langua
 I tailored it by keeping only the languages relevant to our company’s stack — PHP, TypeScript — and added Go to expand our practice scope.
 The objective was to streamline the repository for internal use and enhance the learning experience across our key technologies.
 
+[Original repo](https://github.com/racingDeveloper/tell-dont-ask-kata)
+
 # tell don't ask kata
 A legacy refactor kata, focused on the violation of the [tell don't ask](https://martinfowler.com/bliki/TellDontAsk.html) principle and the [anemic domain model](https://martinfowler.com/bliki/AnemicDomainModel.html).
 

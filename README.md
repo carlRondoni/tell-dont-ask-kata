@@ -25,7 +25,10 @@ But don't stop there.
 
 If you can remove some test cases because they don't make sense anymore (eg: you cannot compile the code to do the wrong thing) feel free to do it!
 
-## Feedback for the creator of this forked version
+## Contribute
+If you would like to contribute to this kata adding new cases or smells: please open a pull request!
+
+## Feedback
 Feedback is welcome!
 
 How did you find the kata? Did you learn anything from it?

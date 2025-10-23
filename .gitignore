@@ -7,5 +7,16 @@ node_modules/
 
 vendor/
 
+#scala
+target/
+*.class
+*.log
+.bsp/
+
+#python
+__pycache__/
+.pytest_cache/
+*.py[cod]
+
 #Mac
 .DS_Store

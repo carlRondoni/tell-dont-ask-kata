@@ -1,5 +1,3 @@
-**NOTE** : Go version added for a team refactoring kata 
-
 # tell don't ask kata
 A legacy refactor kata, focused on the violation of the [tell don't ask](https://martinfowler.com/bliki/TellDontAsk.html) principle and the [anemic domain model](https://martinfowler.com/bliki/AnemicDomainModel.html).
 

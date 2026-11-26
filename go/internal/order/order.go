@@ -2,7 +2,7 @@ package order
 
 type Order struct {
 	id       int
-	status   string
+	status   OrderStatus
 	tax      float64
 	total    float64
 	items    []OrderItem
@@ -11,7 +11,7 @@ type Order struct {
 
 func NewOrder(
 	orderId int,
-	status string,
+	status OrderStatus,
 ) Order {
 	return Order{
 		id:     orderId,
@@ -26,7 +26,7 @@ func (o Order) GetOrderId() int {
 	return o.id
 }
 
-func (o Order) GetStatus() string {
+func (o Order) GetStatus() OrderStatus {
 	return o.status
 }
 
@@ -50,7 +50,7 @@ func (o *Order) SetOrderId(orderId int) {
 	o.id = orderId
 }
 
-func (o *Order) SetStatus(status string) {
+func (o *Order) SetStatus(status OrderStatus) {
 	o.status = status
 }
 

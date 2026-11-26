@@ -25,7 +25,7 @@ func NewOrderCreationUseCase(repository order_repository.OrderRepository, catalo
 func (u *OrderCreationUseCase) Run(request *order_requests.SellItemsRequest) error {
 	ord := order.NewOrder(
 		rand.Intn(1000),
-		order.Created.String(),
+		order.Created,
 	)
 
 	ord.SetCurrency("EUR")

@@ -31,17 +31,16 @@ func (u *OrderShipmentUseCase) Run(request *order_requests.OrderShipmentRequest)
 	}
 
 	switch ord.GetStatus() {
-	case order.Created.String(), order.Rejected.String():
+	case order.Created, order.Rejected:
 		return order_errors.NewOrderCannotBeShippedError()
-	case order.Shipped.String():
+	case order.Shipped:
 		return order_errors.NewOrderCannotBeShippedTwiceError()
 
 	}
 
 	u.shipmentService.Ship(ord)
 
-	ord.SetStatus(order.Shipped.String())
-	u.repository.Save(*ord)
+	ord.SetStatus(order.Shipped)
 
-	return nil
+	return u.repository.Save(*ord)
 }

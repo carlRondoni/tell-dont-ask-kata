@@ -15,7 +15,7 @@ func NewInMemoryProductCatalog() *InMemoryProductCatalog {
 	var products []*product.Product
 	food := product.ProductCategory{}
 	food.SetName("food")
-	food.SetId(10)
+	food.SetTaxPercentage(10)
 
 	product1 := product.NewProduct()
 	product1.SetName("salad")

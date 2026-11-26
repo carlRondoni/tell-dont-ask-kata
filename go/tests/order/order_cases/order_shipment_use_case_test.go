@@ -5,6 +5,7 @@ import (
 
 	"github.com/carlRondoni/tell-dont-ask-kata/internal/order"
 	"github.com/carlRondoni/tell-dont-ask-kata/internal/order/order_cases"
+	"github.com/carlRondoni/tell-dont-ask-kata/internal/order/order_errors"
 	"github.com/carlRondoni/tell-dont-ask-kata/internal/order/order_requests"
 	"github.com/carlRondoni/tell-dont-ask-kata/tests/test_pkg"
 	"github.com/stretchr/testify/assert"
@@ -24,7 +25,7 @@ func TestShipApprovedOrder(t *testing.T) {
 
 	initialOrder := order.NewOrder(
 		1,
-		order.Approved.String(),
+		order.Approved,
 	)
 	orderRepository.AddOrder(&initialOrder)
 
@@ -35,7 +36,7 @@ func TestShipApprovedOrder(t *testing.T) {
 	require.NoError(t, err)
 
 	savedOrder := orderRepository.GetSavedOrder()
-	assert.Equal(t, order.Shipped.String(), savedOrder.GetStatus())
+	assert.Equal(t, order.Shipped, savedOrder.GetStatus())
 }
 
 func TestCreatedOrdersCannotBeShipped(t *testing.T) {
@@ -43,7 +44,7 @@ func TestCreatedOrdersCannotBeShipped(t *testing.T) {
 
 	initialOrder := order.NewOrder(
 		1,
-		order.Created.String(),
+		order.Created,
 	)
 	orderRepository.AddOrder(&initialOrder)
 
@@ -53,6 +54,8 @@ func TestCreatedOrdersCannotBeShipped(t *testing.T) {
 	err := useCase.Run(request)
 	require.Error(t, err)
 	assert.Equal(t, "order cannot be shipped", err.Error())
+	var target *order_errors.OrderCannotBeShipped
+	assert.ErrorAs(t, err, &target)
 
 	assert.Nil(t, orderRepository.GetSavedOrder())
 	assert.Nil(t, shipmentService.GetShippedOrder())
@@ -63,7 +66,7 @@ func TestRejectedOrdersCannotBeShipped(t *testing.T) {
 
 	initialOrder := order.NewOrder(
 		1,
-		order.Rejected.String(),
+		order.Rejected,
 	)
 	orderRepository.AddOrder(&initialOrder)
 
@@ -73,6 +76,8 @@ func TestRejectedOrdersCannotBeShipped(t *testing.T) {
 	err := useCase.Run(request)
 	require.Error(t, err)
 	assert.Equal(t, "order cannot be shipped", err.Error())
+	var target *order_errors.OrderCannotBeShipped
+	assert.ErrorAs(t, err, &target)
 
 	assert.Nil(t, orderRepository.GetSavedOrder())
 	assert.Nil(t, shipmentService.GetShippedOrder())
@@ -83,7 +88,7 @@ func TestShippedOrdersCannotBeShippedAgain(t *testing.T) {
 
 	initialOrder := order.NewOrder(
 		1,
-		order.Shipped.String(),
+		order.Shipped,
 	)
 	orderRepository.AddOrder(&initialOrder)
 
@@ -93,6 +98,8 @@ func TestShippedOrdersCannotBeShippedAgain(t *testing.T) {
 	err := useCase.Run(request)
 	require.Error(t, err)
 	assert.Equal(t, "order cannot be shipped twice", err.Error())
+	var target *order_errors.OrderCannotBeShippedTwice
+	assert.ErrorAs(t, err, &target)
 
 	assert.Nil(t, orderRepository.GetSavedOrder())
 	assert.Nil(t, shipmentService.GetShippedOrder())

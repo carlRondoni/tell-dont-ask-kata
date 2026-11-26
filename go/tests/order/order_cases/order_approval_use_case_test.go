@@ -5,6 +5,7 @@ import (
 
 	"github.com/carlRondoni/tell-dont-ask-kata/internal/order"
 	"github.com/carlRondoni/tell-dont-ask-kata/internal/order/order_cases"
+	"github.com/carlRondoni/tell-dont-ask-kata/internal/order/order_errors"
 	"github.com/carlRondoni/tell-dont-ask-kata/internal/order/order_requests"
 	"github.com/carlRondoni/tell-dont-ask-kata/tests/test_pkg"
 	"github.com/stretchr/testify/assert"
@@ -16,7 +17,7 @@ func TestOrderApprovalUseCase_ApproveExistingOrder(t *testing.T) {
 
 	initialOrder := order.NewOrder(
 		1,
-		order.Created.String(),
+		order.Created,
 	)
 	orderRepository.AddOrder(&initialOrder)
 
@@ -27,7 +28,7 @@ func TestOrderApprovalUseCase_ApproveExistingOrder(t *testing.T) {
 
 	assert.NoError(t, err)
 	savedOrder := orderRepository.GetSavedOrder()
-	assert.Equal(t, order.Approved.String(), savedOrder.GetStatus())
+	assert.Equal(t, order.Approved, savedOrder.GetStatus())
 }
 
 func TestOrderApprovalUseCase_RejectExistingOrder(t *testing.T) {
@@ -36,7 +37,7 @@ func TestOrderApprovalUseCase_RejectExistingOrder(t *testing.T) {
 
 	initialOrder := order.NewOrder(
 		1,
-		order.Created.String(),
+		order.Created,
 	)
 	orderRepository.AddOrder(&initialOrder)
 
@@ -47,7 +48,7 @@ func TestOrderApprovalUseCase_RejectExistingOrder(t *testing.T) {
 
 	assert.NoError(t, err)
 	savedOrder := orderRepository.GetSavedOrder()
-	assert.Equal(t, order.Rejected.String(), savedOrder.GetStatus())
+	assert.Equal(t, order.Rejected, savedOrder.GetStatus())
 }
 
 func TestOrderApprovalUseCase_CannotApproveRejectedOrder(t *testing.T) {
@@ -56,7 +57,7 @@ func TestOrderApprovalUseCase_CannotApproveRejectedOrder(t *testing.T) {
 
 	initialOrder := order.NewOrder(
 		1,
-		order.Rejected.String(),
+		order.Rejected,
 	)
 	orderRepository.AddOrder(&initialOrder)
 
@@ -65,7 +66,8 @@ func TestOrderApprovalUseCase_CannotApproveRejectedOrder(t *testing.T) {
 	request.SetApproved(true)
 	err := useCase.Run(&request)
 
-	assert.Error(t, err, "should throw RejectedOrderCannotBeApprovedException")
+	var target *order_errors.RejectedOrderCannotBeApproved
+	assert.ErrorAs(t, err, &target)
 	assert.Nil(t, orderRepository.GetSavedOrder())
 }
 
@@ -75,7 +77,7 @@ func TestOrderApprovalUseCase_CannotRejectApprovedOrder(t *testing.T) {
 
 	initialOrder := order.NewOrder(
 		1,
-		order.Approved.String(),
+		order.Approved,
 	)
 	orderRepository.AddOrder(&initialOrder)
 
@@ -84,7 +86,8 @@ func TestOrderApprovalUseCase_CannotRejectApprovedOrder(t *testing.T) {
 	request.SetApproved(false)
 	err := useCase.Run(&request)
 
-	assert.Error(t, err, "should throw ApprovedOrderCannotBeRejectedException")
+	var target *order_errors.ApprovedOrderCannotBeRejected
+	assert.ErrorAs(t, err, &target)
 	assert.Nil(t, orderRepository.GetSavedOrder())
 }
 
@@ -94,7 +97,7 @@ func TestOrderApprovalUseCase_ShippedOrdersCannotBeRejected(t *testing.T) {
 
 	initialOrder := order.NewOrder(
 		1,
-		order.Shipped.String(),
+		order.Shipped,
 	)
 	orderRepository.AddOrder(&initialOrder)
 
@@ -103,6 +106,7 @@ func TestOrderApprovalUseCase_ShippedOrdersCannotBeRejected(t *testing.T) {
 	request.SetApproved(false)
 	err := useCase.Run(&request)
 
-	assert.Error(t, err, "should throw ShippedOrdersCannotBeChangedException")
+	var target *order_errors.ShippedOrdersCannotBeChanged
+	assert.ErrorAs(t, err, &target)
 	assert.Nil(t, orderRepository.GetSavedOrder())
 }

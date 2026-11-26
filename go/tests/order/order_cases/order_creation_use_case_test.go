@@ -5,6 +5,7 @@ import (
 
 	"github.com/carlRondoni/tell-dont-ask-kata/internal/order"
 	"github.com/carlRondoni/tell-dont-ask-kata/internal/order/order_cases"
+	"github.com/carlRondoni/tell-dont-ask-kata/internal/order/order_errors"
 	"github.com/carlRondoni/tell-dont-ask-kata/internal/order/order_requests"
 	"github.com/carlRondoni/tell-dont-ask-kata/tests/test_pkg"
 	"github.com/stretchr/testify/assert"
@@ -40,7 +41,7 @@ func TestMultipleItems(t *testing.T) {
 	require.NoError(t, err)
 
 	insertedOrder := orderRepository.GetSavedOrder()
-	assert.Equal(t, order.Created.String(), insertedOrder.GetStatus())
+	assert.Equal(t, order.Created, insertedOrder.GetStatus())
 	assert.Equal(t, 23.20, insertedOrder.GetTotal())
 	assert.Equal(t, 2.13, insertedOrder.GetTax())
 	assert.Equal(t, "EUR", insertedOrder.GetCurrency())
@@ -69,4 +70,6 @@ func TestUnknownProduct(t *testing.T) {
 	err := useCase.Run(&request)
 	require.Error(t, err)
 	assert.EqualError(t, err, "unknown product")
+	var target *order_errors.UnknownProduct
+	assert.ErrorAs(t, err, &target)
 }

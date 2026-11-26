@@ -1,7 +1,6 @@
 package test_pkg
 
 import (
-	"errors"
 	"sync"
 
 	"github.com/carlRondoni/tell-dont-ask-kata/internal/product"
@@ -26,7 +25,7 @@ func NewInMemoryProductCatalog() *InMemoryProductCatalog {
 
 	product2 := product.NewProduct()
 	product2.SetName("tomato")
-	product2.SetPrice(4.56)
+	product2.SetPrice(4.65)
 	product2.SetCategory(food)
 	products = append(products, &product2)
 
@@ -44,5 +43,5 @@ func (c *InMemoryProductCatalog) GetByName(name string) (*product.Product, error
 		}
 	}
 
-	return nil, errors.New("product not found")
+	return nil, nil
 }

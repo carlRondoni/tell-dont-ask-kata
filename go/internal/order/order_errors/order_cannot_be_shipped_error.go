@@ -10,6 +10,6 @@ func (e OrderCannotBeShipped) Error() string {
 
 func NewOrderCannotBeShippedError() error {
 	return &OrderCannotBeShipped{
-		msg: "Order cannot be shipped",
+		msg: "order cannot be shipped",
 	}
 }

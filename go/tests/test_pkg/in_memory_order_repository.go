@@ -32,7 +32,9 @@ func (r *InMemoryOrderRepository) Save(order order.Order) error {
 }
 
 func (r *InMemoryOrderRepository) AddOrder(order *order.Order) {
-	r.Save(*order)
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	r.orders = append(r.orders, order)
 }
 
 func (r *InMemoryOrderRepository) GetById(orderID int) (*order.Order, error) {

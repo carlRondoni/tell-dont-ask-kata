@@ -1,2 +1,2 @@
-run-test:
+run-tests:
 	go test -v ./tests/...

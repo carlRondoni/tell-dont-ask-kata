@@ -81,7 +81,7 @@ func TestOrderApprovalUseCase_CannotRejectApprovedOrder(t *testing.T) {
 
 	request := order_requests.OrderApprovalRequest{}
 	request.SetId(1)
-	request.SetApproved(true)
+	request.SetApproved(false)
 	err := useCase.Run(&request)
 
 	assert.Error(t, err, "should throw ApprovedOrderCannotBeRejectedException")

@@ -10,6 +10,6 @@ func (e OrderCannotBeShippedTwice) Error() string {
 
 func NewOrderCannotBeShippedTwiceError() error {
 	return &OrderCannotBeShippedTwice{
-		msg: "Order cannot be shipped twice",
+		msg: "order cannot be shipped twice",
 	}
 }

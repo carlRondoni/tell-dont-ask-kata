@@ -21,7 +21,7 @@ If you can remove some test cases because they don't make sense anymore (eg: you
 If you would like to contribute to this kata adding new cases or smells: please open a pull request!
 
 ## About this fork
-This fork adds a `go/` folder with a Go version of the kata. I added it while doing the kata with my company, porting it from the PHP version. The rest of the language folders come from the original kata by [@racingDeveloper](https://twitter.com/racingDeveloper). See [go/README.md](go/README.md) for how to run the Go tests.
+This fork adds a `go/` folder with a Go version of the kata. I added it while doing the kata at the company where I work, porting it from the PHP version. The rest of the language folders come from the original kata by [@racingDeveloper](https://twitter.com/racingDeveloper). See [go/README.md](go/README.md) for how to run the Go tests.
 
 ## Feedback
 Feedback is welcome!

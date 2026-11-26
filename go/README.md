@@ -2,7 +2,7 @@
 
 ## About
 
-This Go version of the kata was added by me (Carl A. Rondoni) while doing the kata with my company. It is a port of the PHP version, so it keeps the same legacy, anemic starting point (getters and setters, procedural use cases) ready to be refactored.
+This Go version of the kata was added by me (Carl A. Rondoni) while doing the kata at the company where I work. It is a port of the PHP version, so it keeps the same legacy, anemic starting point (getters and setters, procedural use cases) ready to be refactored.
 
 ## Requirements
 
